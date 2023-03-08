@@ -1,9 +1,13 @@
 import pkgutil
 from pathlib import Path
 
+from nonebot import require
+
 from .data import cqwu_data
 
 __all__ = ["cqwu_data"]
+
+require("nonebot_plugin_apscheduler")
 
 FILE_PATH = Path(__file__).parent.absolute()
 
