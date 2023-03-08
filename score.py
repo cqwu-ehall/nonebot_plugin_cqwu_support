@@ -34,5 +34,5 @@ async def handle_first_receive(event: Union[GroupMessageEvent, PrivateMessageEve
         await score_cqwu.finish(f"⚠️查询失败，没有找到 {score_text} 的成绩")
     text = f"📝{client.me.institute} {client.me.now_class} {client.me.name} {score_text}成绩如下：\n\n" \
            f"课程名称     成绩   绩点\n"
-    temp = "\n".join([f"{score.name} {score.score} {score.grade_point}" for score in scores])
+    temp = "\n".join([f"{score.name}     {score.score}   {score.grade_point}" for score in scores])
     await score_cqwu.finish(text + temp)
