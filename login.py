@@ -34,7 +34,7 @@ async def _(__: PrivateMessageEvent, state: T_State, username: str = ArgPlainTex
         username = int(username)
     except Exception:
         await login_cqwu.reject("⚠️学号应为数字，请重新输入")
-    if len(username) != 12:
+    if len(str(username)) != 12:
         await login_cqwu.reject("⚠️学号应为12位数字，请重新输入")
     else:
         state['username'] = username
