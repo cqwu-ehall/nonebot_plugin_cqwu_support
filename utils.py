@@ -11,3 +11,11 @@ async def get_score(client: Client, year: int, semester: int) -> List[Score]:
     except CookieError:
         await client.login_with_password()
         return await client.get_score()
+
+
+async def get_balance(client: Client) -> str:
+    try:
+        return await client.get_balance()
+    except CookieError:
+        await client.login_with_password()
+        return await client.get_balance()
