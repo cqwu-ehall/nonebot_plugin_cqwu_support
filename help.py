@@ -14,5 +14,7 @@ async def handle_first_receive(_: Union[GroupMessageEvent, PrivateMessageEvent])
         "重文理帮助\n\n"
         "/cqwu_login 登录账号\n"
         "/cqwu_score 查询期末成绩\n"
-        "/cqwu_balance 查询校园卡余额"
+        "/cqwu_balance 查询校园卡余额\n"
+        "/cqwu_calendar 查询本学期课表\n"
+        "/cqwu_calendar_change 查询本学期调课"
     )
