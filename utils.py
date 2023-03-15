@@ -19,3 +19,14 @@ async def get_balance(client: Client) -> str:
     except CookieError:
         await client.login_with_password()
         return await client.get_balance()
+
+
+async def get_calendar(client: Client) -> str:
+    try:
+        if not client.web_ehall_path:
+            raise CookieError()
+        return await client.get_calendar()
+    except CookieError:
+        await client.login_with_password()
+        await client.login_web_vpn()
+        return await client.get_calendar()

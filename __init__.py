@@ -8,6 +8,7 @@ from .data import cqwu_data
 __all__ = ["cqwu_data"]
 
 require("nonebot_plugin_apscheduler")
+require("nonebot_plugin_htmlrender")
 
 FILE_PATH = Path(__file__).parent.absolute()
 

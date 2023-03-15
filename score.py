@@ -31,7 +31,7 @@ async def handle_first_receive(event: Union[GroupMessageEvent, PrivateMessageEve
     client = cqwu_data.get_user(int(event.user_id))
     scores = []
     try:
-        scores = await get_score(client, year=2022, semester=1)
+        scores = await get_score(client, year=score_year, semester=score_semester)
     except UsernameOrPasswordError:
         await score_cqwu.finish("⚠️查询失败，用户名或密码错误，请先使用命令 /cqwu_login 重新登录")
     except NeedCaptchaError:
@@ -43,21 +43,21 @@ async def handle_first_receive(event: Union[GroupMessageEvent, PrivateMessageEve
     await score_cqwu.finish(get_score_text(client, scores))
 
 
-@scheduler.scheduled_job("interval", hours=1, id="cqwu.score")
-async def update_cqwu_score():
-    bot = get_bot()
-    for key, value in cqwu_data.users.items():
-        old_value = cqwu_data.scores.get(key, 0)
-        try:
-            scores = await get_score(value, year=score_year, semester=score_semester)
-            new_value = len(scores)
-            if old_value not in [0, new_value]:
-                await bot.send_private_msg(
-                    user_id=int(key),
-                    message=get_score_text(value, scores)
-                )
-            if new_value != 0:
-                cqwu_data.scores[key] = new_value
-        except Exception as e:
-            print(e)
-            continue
+#@scheduler.scheduled_job("interval", hours=1, id="cqwu.score")
+#async def update_cqwu_score():
+#    bot = get_bot()
+#    for key, value in cqwu_data.users.items():
+#        old_value = cqwu_data.scores.get(key, 0)
+#        try:
+#            scores = await get_score(value, year=score_year, semester=score_semester)
+#            new_value = len(scores)
+#            if old_value not in [0, new_value]:
+#                await bot.send_private_msg(
+#                    user_id=int(key),
+#                    message=get_score_text(value, scores)
+#                )
+#            if new_value != 0:
+#                cqwu_data.scores[key] = new_value
+#        except Exception as e:
+#            print(e)
+#            continue
