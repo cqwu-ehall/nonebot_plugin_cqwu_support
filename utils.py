@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Union
 
 from cqwu import Client
 from cqwu.errors import CookieError
+from cqwu.types.calendar import AiCourse
 from cqwu.types.score import Score
 
 
@@ -21,15 +22,15 @@ async def get_balance(client: Client) -> str:
         return await client.get_balance()
 
 
-async def get_calendar(client: Client) -> str:
+async def get_calendar(client: Client, use_model: bool = False) -> Union[str, List[AiCourse]]:
     try:
         if not client.web_ehall_path:
             raise CookieError()
-        return await client.get_calendar()
+        return await client.get_calendar(use_model=use_model)
     except CookieError:
         await client.login_with_password()
         await client.login_web_vpn()
-        return await client.get_calendar()
+        return await client.get_calendar(use_model=use_model)
 
 
 async def get_calendar_change(client: Client) -> str:
