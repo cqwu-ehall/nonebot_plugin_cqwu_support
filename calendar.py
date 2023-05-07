@@ -92,8 +92,9 @@ class CalendarData:
     @staticmethod
     def format_course(course: AiCourse):
         end_num = course.start_num + course.sections - 1
-        weeks = {','.join([str(i) for i in course.weeks])}
-        return f"{course.name} 星期{course.day} 第{course.start_num}-{end_num}节 [{weeks}]"
+        num = course.start_num if course.sections == 1 else f"{course.start_num}-{end_num}"
+        weeks = ','.join([str(i) for i in course.weeks])
+        return f"{course.name} 星期{course.day} 第{num}节 [{weeks}]"
 
     @staticmethod
     def format_text(old_data: List[AiCourse], new_data: List[AiCourse]):
@@ -117,7 +118,7 @@ async def update_cqwu_calendar():
             old_courses = CalendarData.get_old_data(int(key))
             new_courses = await get_calendar(value, use_model=True)
             new_result, old_result = CalendarData.get_data(old_courses, new_courses)
-            if len(new_result) != 0 or len(old_result) != 0:
+            if (len(new_result) != 0 or len(old_result) != 0) and len(old_courses) != 0:
                 await bot.send_private_msg(
                     user_id=int(key),
                     message=CalendarData.format_text(old_result, new_result)
