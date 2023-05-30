@@ -94,7 +94,7 @@ class CalendarData:
         end_num = course.start_num + course.sections - 1
         num = course.start_num if course.sections == 1 else f"{course.start_num}-{end_num}"
         weeks = ','.join([str(i) for i in course.weeks])
-        return f"{course.name} 星期{course.day} 第{num}节 [{weeks}]"
+        return f"{course.name} {course.position} 星期{course.day} 第{num}节 [{weeks}]"
 
     @staticmethod
     def format_text(old_data: List[AiCourse], new_data: List[AiCourse]):
@@ -110,7 +110,8 @@ class CalendarData:
         return text.strip()
 
 
-@scheduler.scheduled_job("cron", hour=12, minute=0, id="cqwu.calendar")
+@scheduler.scheduled_job("cron", hour=12, minute=0, id="cqwu.calendar.12")
+@scheduler.scheduled_job("cron", hour=18, minute=0, id="cqwu.calendar.18")
 async def update_cqwu_calendar():
     bot = get_bot()
     for key, value in cqwu_data.users.items():
