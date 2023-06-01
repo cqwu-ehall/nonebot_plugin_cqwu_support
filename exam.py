@@ -32,7 +32,7 @@ async def handle_first_receive(event: Union[GroupMessageEvent, PrivateMessageEve
         data.sort(key=lambda x: x.get_time()[0])
         data_list = [data[i : i + 3] for i in range(0, len(data), 3)]
         pic = await template_to_pic(
-            template_path=f"file://{PLUGIN_RES_PATH}",
+            template_path=PLUGIN_RES_PATH,
             template_name="exam.jinja2",
             templates={
                 "title": exam_cqwu_title,

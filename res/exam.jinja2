@@ -18,9 +18,9 @@
             <div class="col">
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-info">{{ d.name_no_id }}
-                        {% if d.day_left > 0 %}
-                            <span class="badge rounded-pill bg-info">{{ d.day_left }}天后</span>
-                            {% if d.day_left < 3 %}
+                        {% if d.days_left > 0 %}
+                            <span class="badge rounded-pill bg-info">{{ d.days_left }}天后</span>
+                            {% if d.days_left < 3 %}
                                 <span class="badge rounded-pill bg-danger">即将</span>
                             {% endif %}
                         {% endif %}
