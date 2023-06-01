@@ -7,6 +7,8 @@ from cqwu import Client
 from .models import User
 
 ROOT_PATH = Path(__name__).parent.absolute()
+PLUGIN_PATH = Path(__file__).parent.absolute()
+PLUGIN_RES_PATH = PLUGIN_PATH / "res"
 DATA_PATH = ROOT_PATH / "data" / "nonebot-plugin-cqwu"
 DATA_PATH.mkdir(parents=True, exist_ok=True)
 
@@ -50,7 +52,9 @@ class CQWUData:
         for user_id, user in self.raw_data.raw_data.items():
             self.users[int(user_id)] = user.get_client()
 
-    def add_user(self, user_id: int, username: int, password: str, client: Client) -> None:
+    def add_user(
+        self, user_id: int, username: int, password: str, client: Client
+    ) -> None:
         self.remove_user(user_id)
         self.users[user_id] = client
         self.raw_data.add_user(user_id, username, password)

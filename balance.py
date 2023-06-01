@@ -8,9 +8,9 @@ from nonebot.adapters.onebot.v11 import GroupMessageEvent, PrivateMessageEvent
 from .utils import get_balance
 from .data import cqwu_data
 
-cqwu_balance = on_command('cqwu_balance', aliases={"校园卡余额"}, priority=4, block=True)
-cqwu_balance.__help_name__ = '查询校园网余额'
-cqwu_balance.__help_info__ = '查询校园网余额'
+cqwu_balance = on_command("cqwu_balance", aliases={"校园卡余额"}, priority=4, block=True)
+cqwu_balance.__help_name__ = "查询校园网余额"
+cqwu_balance.__help_info__ = "查询校园网余额"
 
 
 @cqwu_balance.handle()

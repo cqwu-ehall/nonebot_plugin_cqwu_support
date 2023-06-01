@@ -1,14 +1,16 @@
 from typing import List, Union
 
 from cqwu import Client
-from cqwu.errors import CookieError
+from cqwu.enums import ExamRound
+from cqwu.errors import CookieError, NoExamData
+from cqwu.types import AiExam
 from cqwu.types.calendar import AiCourse
 from cqwu.types.score import Score
 
 
-async def get_score(client: Client, year: int, semester: int) -> List[Score]:
+async def get_score(client: Client) -> List[Score]:
     try:
-        return await client.get_score(year=year, semester=semester)
+        return await client.get_score()
     except CookieError:
         await client.login_with_password()
         return await client.get_score()
@@ -22,7 +24,9 @@ async def get_balance(client: Client) -> str:
         return await client.get_balance()
 
 
-async def get_calendar(client: Client, use_model: bool = False) -> Union[str, List[AiCourse]]:
+async def get_calendar(
+    client: Client, use_model: bool = False
+) -> Union[str, List[AiCourse]]:
     try:
         if not client.web_ehall_path:
             raise CookieError()
@@ -42,3 +46,23 @@ async def get_calendar_change(client: Client) -> str:
         await client.login_with_password()
         await client.login_web_vpn()
         return await client.get_calendar_change()
+
+
+async def get_exam(client: Client, need_exit: bool = False) -> List[AiExam]:
+    try:
+        if not client.web_ehall_path:
+            raise CookieError()
+        data: List[AiExam] = []
+        rounds = [ExamRound.Scattered, ExamRound.Concentration]
+        for r in rounds:
+            try:
+                data.extend(await client.get_exam_calendar(r, use_model=True))
+            except NoExamData:
+                pass
+        return data
+    except CookieError:
+        if need_exit:
+            return []
+        await client.login_with_password()
+        await client.login_web_vpn()
+        return await get_exam(client, need_exit=True)
