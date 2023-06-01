@@ -9,10 +9,10 @@ from nonebot.adapters.onebot.v11 import (
     PrivateMessageEvent,
     MessageSegment,
 )
-from nonebot_plugin_htmlrender import html_to_pic
 from nonebot_plugin_apscheduler import scheduler
 
 from .data import cqwu_data, DATA_PATH
+from .html import html_to_pic
 from .utils import get_calendar, get_calendar_change
 
 calendar_cqwu = on_command("cqwu_calendar", aliases={"课表查询"}, priority=4, block=True)

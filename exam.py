@@ -1,4 +1,4 @@
-from typing import Union, List
+from typing import Union, List, Optional
 
 from cqwu.errors import UsernameOrPasswordError, NeedCaptchaError, NoExamData
 from cqwu.types import AiExam
@@ -8,9 +8,9 @@ from nonebot.adapters.onebot.v11 import (
     PrivateMessageEvent,
     MessageSegment,
 )
-from nonebot_plugin_htmlrender import template_to_pic
 
 from .data import cqwu_data, PLUGIN_RES_PATH
+from .html import template_to_pic
 from .utils import get_exam
 
 exam_cqwu_title = "2022-2023 学年第二学期"
@@ -26,11 +26,13 @@ async def handle_first_receive(event: Union[GroupMessageEvent, PrivateMessageEve
     client = cqwu_data.get_user(int(event.user_id))
     pic = None
     try:
-        data: List[AiExam] = await get_exam(client)
+        data: List[Optional[AiExam]] = await get_exam(client)
         if not data:
             raise NoExamData
         data.sort(key=lambda x: x.get_time()[0])
         data_list = [data[i : i + 3] for i in range(0, len(data), 3)]
+        if len(data_list[-1]) < 3:
+            data_list[-1].extend([None] * (3 - len(data_list[-1])))
         pic = await template_to_pic(
             template_path=PLUGIN_RES_PATH,
             template_name="exam.jinja2",
@@ -42,6 +44,7 @@ async def handle_first_receive(event: Union[GroupMessageEvent, PrivateMessageEve
                 "viewport": {"width": 1440, "height": 1000},
                 "base_url": f"file://{PLUGIN_RES_PATH}",
             },
+            query_selector="#overview",
         )
     except UsernameOrPasswordError:
         await exam_cqwu.finish("⚠️查询失败，用户名或密码错误，请先使用命令 /cqwu_login 重新登录")

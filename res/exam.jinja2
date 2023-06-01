@@ -9,31 +9,35 @@
 </head>
 
 <body>
-<div style="height: 20px;"></div>
-<h4 style="margin-left: 37.5%;">{{ title }} 考试安排</h4>
-<div style="height: 20px;"></div>
-{% for data in data_list %}
-    <div class="row" style="width: 80%; margin-left: 10%;">
-        {% for d in data %}
-            <div class="col">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-info">{{ d.name_no_id }}
-                        {% if d.days_left > 0 %}
-                            <span class="badge rounded-pill bg-info">{{ d.days_left }}天后</span>
-                            {% if d.days_left < 3 %}
-                                <span class="badge rounded-pill bg-danger">即将</span>
-                            {% endif %}
-                        {% endif %}
-                    </li>
-                    <li class="list-group-item list-group-item-warning">{{ d.time }}</li>
-                    <li class="list-group-item list-group-item-success">考试地点：{{ d.position }}</li>
-                    <li class="list-group-item list-group-item-success">座位号：{{ d.seat }}</li>
-                </ul>
-            </div>
-        {% endfor %}
-    </div>
+<div id="overview">
     <div style="height: 20px;"></div>
-{% endfor %}
-<div style="height: 100px;"></div>
+    <h4 style="margin-left: 37.5%;">{{ title }} 考试安排</h4>
+    <div style="height: 20px;"></div>
+    {% for data in data_list %}
+        <div class="row" style="width: 80%; margin-left: 10%;">
+            {% for d in data %}
+                <div class="col">
+                    {% if d %}
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-info">{{ d.name_no_id }}
+                                {% if d.days_left > 0 %}
+                                    <span class="badge rounded-pill bg-info">{{ d.days_left }}天后</span>
+                                    {% if d.days_left < 3 %}
+                                        <span class="badge rounded-pill bg-danger">即将</span>
+                                    {% endif %}
+                                {% endif %}
+                            </li>
+                            <li class="list-group-item list-group-item-warning">{{ d.time }}</li>
+                            <li class="list-group-item list-group-item-success">考试地点：{{ d.position }}</li>
+                            <li class="list-group-item list-group-item-success">座位号：{{ d.seat }}</li>
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <div style="height: 20px;"></div>
+    {% endfor %}
+    <div style="height: 100px;"></div>
+</div>
 </body>
 </html>
