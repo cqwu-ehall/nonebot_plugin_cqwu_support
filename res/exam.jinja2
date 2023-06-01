@@ -22,9 +22,12 @@
                             <li class="list-group-item list-group-item-info">{{ d.name_no_id }}
                                 {% if d.days_left > 0 %}
                                     <span class="badge rounded-pill bg-info">{{ d.days_left }}天后</span>
-                                    {% if d.days_left < 3 %}
-                                        <span class="badge rounded-pill bg-danger">即将</span>
-                                    {% endif %}
+                                {% endif %}
+                                {% if -1 < d.days_left < 3 %}
+                                    <span class="badge rounded-pill bg-danger">即将</span>
+                                {% endif %}
+                                {% if d.days_left < 0 %}
+                                    <span class="badge rounded-pill bg-secondary">已过</span>
                                 {% endif %}
                             </li>
                             <li class="list-group-item list-group-item-warning">{{ d.time }}</li>
