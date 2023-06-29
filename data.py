@@ -45,7 +45,6 @@ class CQWUData:
     def __init__(self):
         self.raw_data = CQWURawData()
         self.users: Dict[int, Client] = {}
-        self.scores: Dict[int, int] = {}
         self.add_all_users()
 
     def add_all_users(self):

@@ -145,4 +145,4 @@ async def update_cqwu_calendar():
 @calendar_refresh_cqwu.handle()
 async def handle_first_receive():
     await update_cqwu_calendar()
-    await calendar_cqwu.finish("手动刷新完成。")
+    await calendar_refresh_cqwu.finish("手动刷新完成。")
