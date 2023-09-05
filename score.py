@@ -85,7 +85,7 @@ class ScoreData:
         return text.strip()
 
 
-@scheduler.scheduled_job("interval", hours=1, id="cqwu.score")
+# @scheduler.scheduled_job("interval", hours=1, id="cqwu.score")
 async def update_cqwu_score():
     bot = get_bot()
     for key, value in cqwu_data.users.items():

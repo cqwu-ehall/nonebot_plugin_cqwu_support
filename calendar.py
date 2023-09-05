@@ -131,10 +131,15 @@ async def update_cqwu_calendar():
             old_courses = CalendarData.get_old_data(int(key))
             new_courses = await get_calendar(value, use_model=True)
             new_result, old_result = CalendarData.get_data(old_courses, new_courses)
-            if (len(new_result) != 0 or len(old_result) != 0) and len(old_courses) != 0:
+            if (len(new_result) != 0 or len(old_result) != 0) and len(old_courses) != 0 and len(new_courses) != 0:
                 await bot.send_private_msg(
                     user_id=int(key),
                     message=CalendarData.format_text(old_result, new_result),
+                )
+            if len(old_courses) == 0 and len(new_courses) != 0:
+                await bot.send_private_msg(
+                    user_id=int(key),
+                    message="新学期课表已上线，请使用命令 /cqwu_calendar 查询。",
                 )
             CalendarData.save_data(int(key), new_courses)
         except Exception as e:
