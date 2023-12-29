@@ -1,7 +1,6 @@
 from typing import List, Union
 
 from cqwu import Client
-from cqwu.enums import ExamRound
 from cqwu.errors import CookieError, NoExamData
 from cqwu.types import AiExam
 from cqwu.types.calendar import AiCourse
@@ -53,7 +52,8 @@ async def get_exam(client: Client, need_exit: bool = False) -> List[AiExam]:
         if not client.web_ehall_path:
             raise CookieError()
         data: List[AiExam] = []
-        rounds = [ExamRound.Scattered, ExamRound.Concentration]
+        action = await client.get_exam_calendar_action()
+        rounds = [action.scattered, action.concentration]
         for r in rounds:
             try:
                 data.extend(await client.get_exam_calendar(r, use_model=True))

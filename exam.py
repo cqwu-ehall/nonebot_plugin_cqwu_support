@@ -13,7 +13,7 @@ from .data import cqwu_data, PLUGIN_RES_PATH
 from .html import template_to_pic
 from .utils import get_exam
 
-exam_cqwu_title = "2022-2023 学年第二学期"
+exam_cqwu_title = "2023-2024 学年第一学期"
 exam_cqwu = on_command("cqwu_exam", aliases={"考试查询"}, priority=4, block=False)
 exam_cqwu.__help_name__ = "查询考试"
 exam_cqwu.__help_info__ = "查询考试排期。"
