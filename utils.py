@@ -2,7 +2,7 @@ from typing import List, Union
 
 from cqwu import Client
 from cqwu.errors import CookieError, NoExamData
-from cqwu.types import AiExam
+from cqwu.types import AiExam, ScoreDetailCourse
 from cqwu.types.calendar import AiCourse
 from cqwu.types.score import Score
 
@@ -13,6 +13,17 @@ async def get_score(client: Client) -> List[Score]:
     except CookieError:
         await client.login_with_password()
         return await client.get_score()
+
+
+async def get_score_origin(client: Client) -> List[ScoreDetailCourse]:
+    try:
+        if not client.web_ehall_path:
+            raise CookieError()
+        return (await client.get_score_detail(use_model=True, origin=True)).courses
+    except CookieError:
+        await client.login_with_password()
+        await client.login_web_vpn()
+        return (await client.get_score_detail(use_model=True, origin=True)).courses
 
 
 async def get_balance(client: Client) -> str:
