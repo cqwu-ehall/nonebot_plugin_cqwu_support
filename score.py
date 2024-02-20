@@ -10,7 +10,7 @@ from nonebot_plugin_apscheduler import scheduler
 from .data import cqwu_data, DATA_PATH
 from .utils import get_score, get_score_origin
 
-score_text = "2022-2023 学年第二学期"
+score_text = "2023-2024 学年第一学期"
 score_cqwu = on_command("cqwu_score", aliases={"期末成绩查询"}, priority=4, block=True)
 score_cqwu.__help_name__ = "查询成绩"
 score_cqwu.__help_info__ = "查询学期成绩。"
@@ -129,7 +129,7 @@ class ScoreData:
         return text.strip()
 
 
-@scheduler.scheduled_job("interval", hours=1, id="cqwu.score")
+# @scheduler.scheduled_job("interval", hours=1, id="cqwu.score")
 async def update_cqwu_score():
     bot = get_bot()
     for key, value in cqwu_data.users.items():
