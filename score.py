@@ -129,7 +129,7 @@ class ScoreData:
         return text.strip()
 
 
-# @scheduler.scheduled_job("interval", hours=1, id="cqwu.score")
+@scheduler.scheduled_job("interval", hours=1, id="cqwu.score")
 async def update_cqwu_score():
     bot = get_bot()
     for key, value in cqwu_data.users.items():
@@ -142,7 +142,7 @@ async def update_cqwu_score():
             if len(new_scores) == 0:
                 continue
             new_result = ScoreData.get_data(old_scores, new_scores)
-            if (len(new_result) != 0) and len(old_scores) != 0:
+            if len(new_result) != 0:
                 await bot.send_private_msg(
                     user_id=int(key),
                     message=ScoreData.format_text(new_result),

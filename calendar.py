@@ -122,8 +122,8 @@ class CalendarData:
         return text.strip()
 
 
-@scheduler.scheduled_job("cron", hour=12, minute=0, id="cqwu.calendar.12")
-@scheduler.scheduled_job("cron", hour=18, minute=0, id="cqwu.calendar.18")
+# @scheduler.scheduled_job("cron", hour=12, minute=0, id="cqwu.calendar.12")
+# @scheduler.scheduled_job("cron", hour=18, minute=0, id="cqwu.calendar.18")
 async def update_cqwu_calendar():
     bot = get_bot()
     for key, value in cqwu_data.users.items():
